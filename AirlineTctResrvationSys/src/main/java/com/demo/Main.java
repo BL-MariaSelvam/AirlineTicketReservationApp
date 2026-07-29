@@ -12,7 +12,7 @@ public class Main {
             System.out.println("\n===== USER MANAGEMENT =====");
             System.out.println("1.Register");
             System.out.println("2.Login");
-            System.out.println("3.Reset Password");
+            System.out.println("3.Reset Passwogit rd");
             System.out.println("4.Update Profile");
             System.out.println("5.Deactivate Account");
             System.out.println("6.Exit");
