@@ -4,98 +4,205 @@ import java.util.*;
 
 import java.util.ArrayList;
 
+import java.util.*;
+import java.util.stream.*;
+
 public class FlightService {
 
-    ArrayList<Flight> flights = new ArrayList<>();
+    List<Flight> flights = Arrays.asList(
 
-    public FlightService(){
+            new Flight("Air India","Chennai","Delhi",
+                    180,"06:30",160,0,40,10,2),
 
-        flights.add(new Flight(
-                "Air India",
-                "AI101",
-                "Airbus A320",
+            new Flight("Air India","Chennai","Mumbai",
+                    150,"14:00",140,30,35,8,2),
 
-                "Chennai",
-                "Delhi",
+            new Flight("IndiGo","Chennai","Delhi",
+                    170,"10:30",165,60,50,6,0),
 
-                "06:30",
-                "09:10",
+            new Flight("IndiGo","Delhi","Dubai",
+                    420,"20:30",240,90,45,8,5),
 
-                "IST",
-                "IST",
+            new Flight("Vistara","Chennai","Delhi",
+                    220,"18:00",150,0,30,12,6)
+    );
 
-                160,
-                "Non Stop",
+    // 1. Group by Airline
+    public void groupByAirline() {
 
-                40,
-                12,
-                4,
+        Map<String,List<Flight>> result =
+                flights.stream()
+                        .collect(Collectors.groupingBy(
+                                Flight::getAirline));
 
-                180,
-                25,
-                10,
+        result.forEach((airline,list)->{
 
-                "20 Kg",
-                "7 Kg",
+            System.out.println("\n"+airline);
 
-                "Free within 24 Hours",
-                "$30 Modification Fee",
+            list.forEach(System.out::println);
 
-                "WiFi, Meals, Entertainment",
-
-                "On Time"
-        ));
-
-        flights.add(new Flight(
-                "IndiGo",
-                "6E220",
-                "Airbus A321",
-
-                "Chennai",
-                "Mumbai",
-
-                "10:00",
-                "12:15",
-
-                "IST",
-                "IST",
-
-                135,
-                "Non Stop",
-
-                28,
-                10,
-                2,
-
-                150,
-                20,
-                8,
-
-                "15 Kg",
-                "7 Kg",
-
-                "Non Refundable",
-                "$25 Modification Fee",
-
-                "Meals, USB Charging",
-
-                "Delayed 30 Minutes"
-        ));
+        });
     }
 
-    public void search(String source,String destination){
+    // 2. Group by Price Range
+    public void groupByPriceRange(){
 
-        for(Flight f:flights){
+        Map<String,List<Flight>> result =
+                flights.stream()
+                        .collect(Collectors.groupingBy(f->{
 
-            if(f.getSource().equalsIgnoreCase(source)
-                    &&
-                    f.getDestination().equalsIgnoreCase(destination)){
+                            if(f.getPrice()<200)
+                                return "Budget";
 
-                f.display();
+                            else if(f.getPrice()<400)
+                                return "Standard";
 
-            }
+                            else
+                                return "Premium";
+                        }));
 
-        }
+        result.forEach((k,v)->{
+
+            System.out.println("\n"+k);
+
+            v.forEach(System.out::println);
+
+        });
+
+    }
+
+    // 3. Group by Time Slot
+    public void groupByTimeSlot(){
+
+        Map<String,List<Flight>> result =
+                flights.stream()
+                        .collect(Collectors.groupingBy(f->{
+
+                            int hour=Integer.parseInt(
+                                    f.getDepartureTime().split(":")[0]);
+
+                            if(hour<12)
+                                return "Morning";
+
+                            else if(hour<17)
+                                return "Afternoon";
+
+                            else if(hour<21)
+                                return "Evening";
+
+                            else
+                                return "Night";
+
+                        }));
+
+        result.forEach((k,v)->{
+
+            System.out.println("\n"+k);
+
+            v.forEach(System.out::println);
+
+        });
+
+    }
+
+    // 4. Average Fare by Airline
+    public void averageFare(){
+
+        Map<String,Double> avg =
+                flights.stream()
+                        .collect(Collectors.groupingBy(
+                                Flight::getAirline,
+                                Collectors.averagingDouble(
+                                        Flight::getPrice)));
+
+        avg.forEach((k,v)->
+
+                System.out.println(k+" : $"+v));
+
+    }
+
+    // 5. Cheapest Flight by Route
+    public void cheapestFlight(){
+
+        Map<String,Optional<Flight>> cheapest =
+                flights.stream()
+                        .collect(Collectors.groupingBy(
+                                Flight::getRoute,
+                                Collectors.minBy(
+                                        Comparator.comparingDouble(
+                                                Flight::getPrice))));
+
+        cheapest.forEach((k,v)->
+
+                System.out.println(k+" -> "+v.get()));
+
+    }
+
+    // 6. Group by Layover
+    public void layoverGroup(){
+
+        Map<String,List<Flight>> result=
+                flights.stream()
+                        .collect(Collectors.groupingBy(f->{
+
+                            if(f.getLayover()==0)
+                                return "Non Stop";
+
+                            else if(f.getLayover()<=60)
+                                return "Short Layover";
+
+                            else
+                                return "Long Layover";
+
+                        }));
+
+        result.forEach((k,v)->{
+
+            System.out.println("\n"+k);
+
+            v.forEach(System.out::println);
+
+        });
+
+    }
+
+    // 7. Aggregate Seats
+    public void totalSeats(){
+
+        int seats=flights.stream()
+
+                .collect(Collectors.summingInt(
+                        Flight::getTotalSeats));
+
+        System.out.println("Total Seats : "+seats);
+
+    }
+
+    // 8. Round Trip Group
+    public void roundTripDuration(){
+
+        Map<String,List<Flight>> result=
+                flights.stream()
+                        .collect(Collectors.groupingBy(f->{
+
+                            if(f.getDuration()<180)
+                                return "Short Journey";
+
+                            else if(f.getDuration()<300)
+                                return "Medium Journey";
+
+                            else
+                                return "Long Journey";
+
+                        }));
+
+        result.forEach((k,v)->{
+
+            System.out.println("\n"+k);
+
+            v.forEach(System.out::println);
+
+        });
 
     }
 

@@ -8,20 +8,31 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-
         FlightService service = new FlightService();
 
-        System.out.println("===== FLIGHT INFORMATION =====");
+        System.out.println("1. Group By Airline");
+        service.groupByAirline();
 
-        System.out.print("Source : ");
-        String source = sc.nextLine();
+        System.out.println("\n2. Group By Price");
+        service.groupByPriceRange();
 
-        System.out.print("Destination : ");
-        String destination = sc.nextLine();
+        System.out.println("\n3. Group By Time Slot");
+        service.groupByTimeSlot();
 
-        service.search(source,destination);
+        System.out.println("\n4. Average Fare");
+        service.averageFare();
 
+        System.out.println("\n5. Cheapest Flight");
+        service.cheapestFlight();
+
+        System.out.println("\n6. Layover Group");
+        service.layoverGroup();
+
+        System.out.println("\n7. Total Seats");
+        service.totalSeats();
+
+        System.out.println("\n8. Round Trip Group");
+        service.roundTripDuration();
     }
 
 }
