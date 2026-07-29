@@ -2,8 +2,8 @@ package com.demo;
 
 public interface BookingState {
 
-    void next(Booking booking);
+    void nextState(Booking booking);
 
-    String getStateName();
+    String getState();
 
 }

@@ -1,18 +1,18 @@
 package com.demo;
 
-public class PaymentPendingState implements BookingState {
+public class ConfirmedState implements BookingState {
 
     @Override
     public void nextState(Booking booking) {
 
-        booking.setState(new ConfirmedState());
+        System.out.println("Booking is already CONFIRMED.");
 
     }
 
     @Override
     public String getState() {
 
-        return "PAYMENT_PENDING";
+        return "CONFIRMED";
 
     }
 

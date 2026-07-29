@@ -8,42 +8,21 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
+        Flight flight =
+                new Flight("AI101",100);
 
-        Booking booking = new Booking();
+        Booking booking =
+                new Booking(flight);
 
-        int choice;
+        booking.addPassenger(
+                new Passenger("John"));
 
-        do {
+        booking.addPassenger(
+                new Passenger("Emma"));
 
-            System.out.println("\n===== PASSENGER MANAGEMENT =====");
+        booking.confirmBooking();
 
-            System.out.println("1. Add Passenger");
-            System.out.println("2. View Passenger List");
-            System.out.println("3. Exit");
-
-            System.out.print("Choice : ");
-            choice = Integer.parseInt(sc.nextLine());
-
-            switch(choice) {
-
-                case 1:
-                    booking.addPassengers();
-                    break;
-
-                case 2:
-                    booking.showBookingPassengers();
-                    break;
-
-                case 3:
-                    System.out.println("Thank You");
-                    break;
-
-                default:
-                    System.out.println("Invalid Choice");
-            }
-
-        } while(choice != 3);
+        booking.display();
 
     }
 }
