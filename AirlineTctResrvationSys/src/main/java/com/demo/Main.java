@@ -3,51 +3,46 @@ package com.demo;
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
     public static void main(String[] args) {
 
-        UserService service = new UserService();
+        User passenger = new Passenger(
+                101,
+                "John",
+                "john@gmail.com");
 
-        while (true) {
+        User admin = new Admin(
+                1,
+                "System Admin",
+                "admin@gmail.com");
 
-            System.out.println("\n===== USER MANAGEMENT =====");
-            System.out.println("1.Register");
-            System.out.println("2.Login");
-            System.out.println("3.Reset Passwogit rd");
-            System.out.println("4.Update Profile");
-            System.out.println("5.Deactivate Account");
-            System.out.println("6.Exit");
+        User staff = new AirlineStaff(
+                201,
+                "David",
+                "staff@gmail.com");
 
-            java.util.Scanner sc = new java.util.Scanner(System.in);
+        // Polymorphism
+        User users[] = { passenger, admin, staff };
 
-            int choice = Integer.parseInt(sc.nextLine());
+        for(User user : users){
 
-            switch (choice) {
+            user.displayProfile();
 
-                case 1:
-                    service.registerUser();
-                    break;
+            user.accessFeatures();
 
-                case 2:
-                    service.login();
-                    break;
-
-                case 3:
-                    service.resetPassword();
-                    break;
-
-                case 4:
-                    service.updateProfile();
-                    break;
-
-                case 5:
-                    service.deactivateAccount();
-                    break;
-                case 6:
-                    System.exit(0);
-
-                default:
-                    System.out.println("Invalid Choice");
-            }
+            System.out.println("-------------------------");
         }
+
+        System.out.println("\nAccess Validation");
+
+        AccessValidator.validate(admin,"Manage Users");
+
+        AccessValidator.validate(staff,"Manage Flights");
+
+        AccessValidator.validate(passenger,"Own Booking");
+
+        AccessValidator.validate(passenger,"Manage Flights");
+
     }
+
 }
