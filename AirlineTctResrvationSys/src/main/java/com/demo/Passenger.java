@@ -1,23 +1,21 @@
 package com.demo;
+public class Passenger {
 
-public class Passenger extends User {
+    private String name;
+    private String passport;
 
-    public Passenger(int userId, String name, String email) {
-        super(userId, name, email);
-    }
+    public Passenger(String name, String passport) {
 
-    @Override
-    public void accessFeatures() {
-
-        System.out.println("\nRole : Passenger");
-
-        System.out.println("✔ Search Flights");
-        System.out.println("✔ Book Flight");
-        System.out.println("✔ Cancel Own Booking");
-        System.out.println("✔ View Own Booking");
-
-        System.out.println("✘ Cannot Manage Flights");
-        System.out.println("✘ Cannot Manage Users");
+        this.name = name;
+        this.passport = passport;
 
     }
+
+    public boolean isValid() {
+
+        return name != null && !name.isEmpty()
+                && passport != null && !passport.isEmpty();
+
+    }
+
 }

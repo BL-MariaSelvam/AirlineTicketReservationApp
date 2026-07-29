@@ -8,31 +8,36 @@ public class Main {
 
     public static void main(String[] args) {
 
-        FlightService service = new FlightService();
+        public static void main(String[] args) {
 
-        System.out.println("1. Group By Airline");
-        service.groupByAirline();
+            Flight flight =
+                    new Flight("AI101",200);
 
-        System.out.println("\n2. Group By Price");
-        service.groupByPriceRange();
+            Booking booking =
+                    new Booking(flight);
 
-        System.out.println("\n3. Group By Time Slot");
-        service.groupByTimeSlot();
+            booking.addPassenger(
+                    new Passenger(
+                            "John",
+                            "P123456"));
 
-        System.out.println("\n4. Average Fare");
-        service.averageFare();
+            booking.addPassenger(
+                    new Passenger(
+                            "Emma",
+                            "P987654"));
 
-        System.out.println("\n5. Cheapest Flight");
-        service.cheapestFlight();
+            booking.lockSeats();
 
-        System.out.println("\n6. Layover Group");
-        service.layoverGroup();
+            booking.setCharges(40,25);
 
-        System.out.println("\n7. Total Seats");
-        service.totalSeats();
+            booking.nextState();
 
-        System.out.println("\n8. Round Trip Group");
-        service.roundTripDuration();
-    }
+            booking.nextState();
+
+            booking.nextState();
+
+            booking.display();
+
+        }
 
 }
