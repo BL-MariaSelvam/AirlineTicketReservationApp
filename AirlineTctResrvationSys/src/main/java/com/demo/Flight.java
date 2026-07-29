@@ -3,25 +3,21 @@ package com.demo;
 public class Flight {
 
     private String flightNo;
-    private double fare;
+    private String source;
+    private String destination;
 
-    public Flight(String flightNo, double fare) {
+    public Flight(String flightNo, String source, String destination) {
 
         this.flightNo = flightNo;
-        this.fare = fare;
-
-    }
-
-    public double getFare() {
-
-        return fare;
-
+        this.source = source;
+        this.destination = destination;
     }
 
     public String getFlightNo() {
-
         return flightNo;
-
     }
 
+    public String getRoute() {
+        return source + " -> " + destination;
+    }
 }

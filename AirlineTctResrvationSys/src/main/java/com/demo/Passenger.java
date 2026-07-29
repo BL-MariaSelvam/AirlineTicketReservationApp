@@ -4,23 +4,24 @@ import java.util.ArrayList;
 public class Passenger {
 
     private String name;
-    private ArrayList<String> bookingHistory = new ArrayList<>();
+    private String email;
+    private String phone;
 
-    public Passenger(String name) {
-
+    public Passenger(String name, String email, String phone) {
         this.name = name;
-
+        this.email = email;
+        this.phone = phone;
     }
 
-    public void addBookingHistory(String bookingNo) {
+    public String getEmail() {
+        return email;
+    }
 
-        bookingHistory.add(bookingNo);
-
+    public String getPhone() {
+        return phone;
     }
 
     public String getName() {
-
         return name;
-
     }
 }

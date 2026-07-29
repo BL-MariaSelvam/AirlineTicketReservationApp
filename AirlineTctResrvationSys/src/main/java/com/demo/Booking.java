@@ -5,100 +5,94 @@ import java.util.*;
 
 import java.util.*;
 import java.util.UUID;
+import java.util.ArrayList;
 
 public class Booking {
 
-    private Flight flight;
-    private ArrayList<Passenger> passengers;
-
-    private BookingState state;
-
-    private boolean seatsLocked;
-
-    private String bookingNo;
+    private String pnr;
     private String ticketNo;
 
-    public Booking(Flight flight) {
+    private Flight flight;
 
-        this.flight = flight;
+    private ArrayList<Passenger> passengers;
 
-        passengers = new ArrayList<>();
+    private String seatNo;
+    private double fare;
 
-        state = new PaymentPendingState();
+    private String bookingStatus;
+    private String paymentStatus;
+    private String transactionId;
+    private String checkInStatus;
 
-        seatsLocked = true;
+    public Booking(String pnr,String ticketNo,
+                   Flight flight,
+                   String seatNo,
+                   double fare,
+                   String bookingStatus,
+                   String paymentStatus,
+                   String transactionId,
+                   String checkInStatus){
 
+        this.pnr=pnr;
+        this.ticketNo=ticketNo;
+        this.flight=flight;
+        this.seatNo=seatNo;
+        this.fare=fare;
+        this.bookingStatus=bookingStatus;
+        this.paymentStatus=paymentStatus;
+        this.transactionId=transactionId;
+        this.checkInStatus=checkInStatus;
+
+        passengers=new ArrayList<>();
     }
 
-    public void addPassenger(Passenger passenger) {
-
-        passengers.add(passenger);
-
+    public void addPassenger(Passenger p){
+        passengers.add(p);
     }
 
-    public void confirmBooking() {
+    public String getPNR(){
+        return pnr;
+    }
 
-        state.nextState(this);
+    public String getTicketNo(){
+        return ticketNo;
+    }
 
-        bookingNo = "PNR"
-                + UUID.randomUUID()
-                .toString()
-                .substring(0,6)
-                .toUpperCase();
+    public ArrayList<Passenger> getPassengers(){
+        return passengers;
+    }
 
-        ticketNo = "ET"
-                + UUID.randomUUID()
-                .toString()
-                .substring(0,8)
-                .toUpperCase();
+    public void display(){
 
-        BookingDatabase.save(this);
+        System.out.println("\n========== BOOKING ==========");
 
-        seatsLocked = false;
+        System.out.println("PNR : "+pnr);
 
-        flight.reduceSeats(passengers.size());
+        System.out.println("E-Ticket : "+ticketNo);
 
-        for(Passenger p : passengers){
+        System.out.println("Flight : "+flight.getFlightNo());
 
-            p.addBookingHistory(bookingNo);
+        System.out.println("Route : "+flight.getRoute());
+
+        System.out.println("Seat : "+seatNo);
+
+        System.out.println("Fare : $"+fare);
+
+        System.out.println("\nPassengers");
+
+        for(Passenger p:passengers){
+
+            System.out.println(p.getName());
 
         }
 
-        NotificationService.sendEmail(bookingNo);
+        System.out.println("\nBooking Status : "+bookingStatus);
 
-        NotificationService.sendSMS(bookingNo);
+        System.out.println("Payment Status : "+paymentStatus);
 
-        System.out.println("\nBooking Confirmed Successfully");
+        System.out.println("Transaction ID : "+transactionId);
 
-    }
-
-    public void setState(BookingState state){
-
-        this.state = state;
-
-    }
-
-    public void display() {
-
-        System.out.println("\n====== BOOKING DETAILS ======");
-
-        System.out.println("Booking Number : "
-                + bookingNo);
-
-        System.out.println("E-Ticket Number : "
-                + ticketNo);
-
-        System.out.println("Flight : "
-                + flight.getFlightNo());
-
-        System.out.println("Booking State : "
-                + state.getState());
-
-        System.out.println("Seat Lock Released : "
-                + !seatsLocked);
-
-        System.out.println("Available Seats : "
-                + flight.getAvailableSeats());
+        System.out.println("Check-In Status : "+checkInStatus);
 
     }
 

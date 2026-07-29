@@ -8,21 +8,55 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Flight flight =
-                new Flight("AI101",100);
+        Flight flight=new Flight(
+                "AI101",
+                "Chennai",
+                "Delhi");
 
-        Booking booking =
-                new Booking(flight);
+        Booking booking=new Booking(
+
+                "PNR12345",
+
+                "ET987654",
+
+                flight,
+
+                "12A",
+
+                250,
+
+                "Confirmed",
+
+                "Paid",
+
+                "TXN458796",
+
+                "Not Checked-In");
 
         booking.addPassenger(
-                new Passenger("John"));
+                new Passenger(
+                        "John",
+                        "john@gmail.com",
+                        "9876543210"));
 
         booking.addPassenger(
-                new Passenger("Emma"));
+                new Passenger(
+                        "Emma",
+                        "emma@gmail.com",
+                        "9876501234"));
 
-        booking.confirmBooking();
+        BookingService service=
+                new BookingService();
 
-        booking.display();
+        service.addBooking(booking);
+
+        service.searchPNR("PNR12345");
+
+        service.searchEmail("john@gmail.com");
+
+        service.searchTicket("ET987654");
+
+        service.downloadTicket("ET987654");
 
     }
 }
