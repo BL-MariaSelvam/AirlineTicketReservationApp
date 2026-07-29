@@ -10,62 +10,38 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BookingHistoryService service =
-                new BookingHistoryService();
+        PaymentService service =
+                new PaymentService();
 
-        service.addBooking(
+        Payment upi =
+                new UPIPayment(
+                        "john@oksbi",
+                        "Google Pay");
 
-                new Booking("PNR101","AI101",
-                        "Chennai","Delhi",
-                        LocalDate.of(2026,8,15),
-                        "Upcoming",250));
+        Payment card =
+                new CardPayment(
+                        "1234567890123456",
+                        "Credit");
 
-        service.addBooking(
+        Payment emi =
+                new EMIPayment(
+                        "9876543210123456",
+                        6);
 
-                new Booking("PNR102","6E220",
-                        "Delhi","Mumbai",
-                        LocalDate.of(2026,5,20),
-                        "Past",180));
+        System.out.println("\nUPI Payment");
+        service.makePayment(upi,250);
 
-        service.addBooking(
+        System.out.println("\nCard Payment");
+        service.makePayment(card,500);
 
-                new Booking("PNR103","UK550",
-                        "Mumbai","Dubai",
-                        LocalDate.of(2026,7,10),
-                        "Cancelled",320));
+        System.out.println("\nEMI Payment");
+        service.makePayment(emi,1200);
 
-        System.out.println("All Bookings");
-        service.displayAll();
+        System.out.println("\nRefund");
 
-        System.out.println("\nUpcoming Bookings");
-        service.filterStatus("Upcoming");
-
-        System.out.println("\nBookings between dates");
-        service.filterDate(
-
-                LocalDate.of(2026,7,1),
-
-                LocalDate.of(2026,8,31));
-
-        System.out.println("\nNewest First");
-        service.newestFirst();
-
-        System.out.println("\nOldest First");
-        service.oldestFirst();
-
-        System.out.println("\nView Details");
-        service.viewDetails("PNR101");
-
-        System.out.println("\nCancel Booking");
-        service.cancelBooking("PNR101");
-
-        System.out.println("\nModify Booking");
-        service.modifyBooking("PNR102");
-
-        System.out.println("\nExport");
-        service.exportPDF();
-        service.exportExcel();
+        service.refundPayment(card,500);
 
     }
+
 
 }
